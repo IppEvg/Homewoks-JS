@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        'use strict';
+        //Задание 1
+        for (let i = 0; i <= 10; i++) {
+            if (i == 0) {
+                console.log(i + "- это ноль");
+            } else if (i % 2 == 0) {
+                console.log(i + "- четное число");
+            } else {
+                console.log(i + "- не четное число");
+            }
+        }
+        // Задание 2
+        const post = {
+            author: "John", //вывести этот текст
+            postId: 23,
+            comments: [
+                {
+                    userId: 10,
+                    userName: "Alex",
+                    text: "lorem ipsum",
+                    rating: {
+                        likes: 10,
+                        dislikes: 2 //вывести это число
+                    }
+                },
+                {
+                    userId: 5, //вывести это число
+                    userName: "Jane",
+                    text: "lorem ipsum 2", //вывести этот текст
+                    rating: {
+                        likes: 3,
+                        dislikes: 1
+                    }
+                },
+            ]
+        };
+
+        console.log(post.author);
+        console.log(post.comments[0].rating.dislikes);
+        console.log(post.comments[1].userId);
+        console.log(post.comments[1].text);
+
+        //задание 3
+        const products = [
+            {
+                id: 3,
+                price: 200,
+            },
+            {
+                id: 4,
+                price: 900,
+            },
+            {
+                id: 1,
+                price: 1000,
+            },
+        ];
+
+        products.forEach(function (elem, i) {
+            products[i].price = products[i].price - products[i].price * 0.15;
+        });
+        console.log(products);//т.к. мы имеем дело с массивом, то он передасть значения в products по ссылке, поэтому мы смотрим в консоли на нее, а не создаем новую переменную.
+
+        //задание 4
+        const products2 = [ // чтобы не создавать новую страницу для задания, переименовал переменную в products2
+            {
+                id: 3,
+                price: 127,
+                photos: [
+                    "1.jpg",
+                    "2.jpg",
+                ]
+            },
+            {
+                id: 5,
+                price: 499,
+                photos: []
+            },
+            {
+                id: 10,
+                price: 26,
+                photos: [
+                    "3.jpg"
+                ]
+            },
+            {
+                id: 8,
+                price: 78,
+            },
+        ];
+
+        let products2WithPhotos = products2.filter(function (element) {
+            if (element.photos && element.photos.length > 0) {  //долго не понимал, почему просто с length не работает. Посмотрел ваше видео и понял, что свойство  photos в виде массива есть не у всех элементов исходного массива, а значит и свойства length у него быть не может, поэтому выдает ошибку. 
+                return element;
+            }
+
+        });
+        console.log(products2WithPhotos);
+
+        let productsSort = products2.sort(function (elem1, elem2) {
+
+            if (elem1.price < elem2.price) {
+                return -1;
+            }
+            if (elem1.price > elem2.price) {
+                return 1;
+            }
+            return 0;
+        });
+
+        console.log(productsSort);
+
+        // задание 5
+        for (let i = 0; i < 10; i = function () {
+            console.log(i);                               // сам не решил. Но смотрел решение. Оказалось все проще
+            i = i + 1;
+        }) { };
+
+        for (let i = 0; i < 10; console.log(i++));
+
+        // Задание 6
+        let ar = [];
+        for (let i = ar.length; i <= 20; i++) {
+            ar = ar.push('x');
+            ar = ar.join('');               // посмотрел решение и понял, что сам бы точно не догадался. для i присвоить "x", а потом связать еще и с длинной и конкатенацией. Я пытался сделать через добавление x массиву и потом его преобразовывать в строку на каждой итерации. Но и тут пишет ошибку, что  ar.join is not a function.
+            console.log(ar);
+        }
+
+
+
+    </script>
+
+
+
+
+
+</body>
+
+</html>
