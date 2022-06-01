@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        'use strict';
+        //Задание 1.(по желанию)
+        function GetNumberToObject(number) {
+            this.number = prompt('введи число от 0 до 999');
+            let num = +this.number;
+            if (Number.isInteger(num) && parseInt(num / 10) == 0) {
+                console.log(num + ' - это единицы');
+                let ed = num;
+                this.units = ed;
+            } else if (Number.isInteger(num) && 10 <= parseInt(num / 10) && parseInt(num / 10) < 100) {
+                let sot = (num - (num % 100)) / 100;
+                let des = (num - sot * 100 - ((num - (sot * 100)) % 10)) / 10;
+                let ed = num - sot * 100 - des * 10;
+                console.log(sot + ' - это сотни, ' + des + ' - это десятки, ' + ed + ' - это единицы');
+                this.hundreds = sot;
+                this.tens = des;
+                this.units = ed;
+            } else if (Number.isInteger(num) && parseInt(num / 10) < 10) {
+                let des = (num - (num % 10)) / 10;
+                let ed = num - des * 10;
+                console.log(des + ' - это десятки, ' + ed + ' - это единицы');
+                this.tens = des;
+                this.units = ed;
+            } else {
+                console.log("неправильно введено целое число до 999");
+            }
+        }
+
+        let object1 = new GetNumberToObject();
+
+
+        for (const property in object1) {
+            console.log(property, object1[property]);
+        }
+
+
+        // Задание 1.1 
+        // es5
+        function GetObjectEs5(name, price) {
+            this.name = name;
+            this.price = price;
+        };
+        GetObjectEs5.prototype.make25PercentDiscount = function () {
+            this.price = this.price - this.price * 0.25;
+        };
+
+        let object2 = new GetObjectEs5('jacket', 1000);
+        for (const property in object2) { // выведем все значения свойств объекта до применения скидки
+            console.log(property, object2[property]);
+        };
+        object2.make25PercentDiscount();
+        for (const property in object2) {     //  после применения скидки
+            console.log(property, object2[property]);
+        }
+
+        //es6
+        class GetObjectEs6 {
+            constructor(name, price) {
+                this.name = name;
+                this.price = price;
+            };
+            make25PercentDiscount() {
+                this.price = this.price - this.price * 0.25;
+            }
+        }
+        let object3 = new GetObjectEs6("shoes", 700);
+        for (const property in object3) { // по аналогии с es5
+            console.log(property, object3[property]);
+        };
+        object3.make25PercentDiscount();
+        for (const property in object3) {     //  после применения скидки
+            console.log(property, object3[property]);
+        }
+
+
+        //Задание 1.2
+
+        //es5
+        function Post(author, text, date) {
+            this.author = author;
+            this.text = text;
+            this.date = date;
+        };
+        Post.prototype.edit = function () {
+            this.text = prompt('введи текст для записи в объект');
+        };
+        function AttachedPost(author, text, date, highlighted) {
+            Post.call(this, author, text, date);
+            this.highlighted = false;
+        };
+        AttachedPost.prototype = Object.create(Post.prototype);
+        AttachedPost.prototype.constructor = AttachedPost;
+
+        AttachedPost.prototype.makeTextHighlighted = function () {
+            this.highlighted = true;
+        };
+        let post1 = new Post('Evgeniy', 'nothing', '1 june');
+        post1.edit();
+        for (const property in post1) {     //  посмотрим, получили ли мы нужные свойства 
+            console.log(property, post1[property]);
+        }
+
+        let post2 = new AttachedPost('Evgeniy', 'nothing', '1 june',);
+        post2.makeTextHighlighted();
+        for (const property in post2) {     //  посмотрим, получили ли мы нужные свойства после наследования и применения методов
+            console.log(property, post2[property]);
+        }
+        //es6 
+        class PostEs6 {
+            constructor(author, text, date) {
+                this.author = author;
+                this.text = text;
+                this.date = date;
+            }
+            editEs6() {
+                this.text = prompt('введи текст для записи в объект');
+            }
+        };
+        class AttachedPostEs6 extends PostEs6 {
+            constructor(author, text, date, highlighted) {
+                super(author, text, date);
+                this.highlighted = false;
+            }
+            makeTextHighlightedEs6() {
+                this.highlighted = true;
+            }
+        };
+        let post1Es6 = new PostEs6('Evgeniy', 'nothing', '1 june');
+        post1Es6.editEs6();
+        for (const property in post1Es6) {
+            console.log(property, post1Es6[property]);
+        };
+
+        let post2Es6 = new AttachedPostEs6('Evgeniy', 'nothing', '1 june',);
+        post2Es6.makeTextHighlightedEs6();
+        for (const property in post2Es6) {
+            console.log(property, post2Es6[property]);
+        }
+
+
+    </script>
+
+
+
+
+
+
+</body>
+
+</html>
