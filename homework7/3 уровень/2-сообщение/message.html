@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <button>Показать сообщение</button>
+    <div class="message">
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt, aliquam enim voluptates quibusdam
+        perferendis sint ipsa, nulla quas doloribus nobis libero voluptatem unde inventore. Ut quas corporis fugit error
+        explicabo? Ipsa quos qui similique sequi officia quod ab reiciendis alias!
+    </div>
+
+    <!-- 
+    Задание. Вам нужно чтобы при клике на кнопку появлялось сообщение .message
+    снизу экрана, в общем как сообщения вконтакте.
+    1. Аудио воспроизводите как здесь https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement
+    2. Чтобы получить высоту .message, используйте свойство clientHeight
+    3. Чтобы анимировать перемещение .message используйте стиль transform
+    как здесь https://webref.ru/css/value/translatey
+    -->
+
+    <script>
+        'use strict';
+        let button = document.querySelector('button');
+        let message = document.querySelector('.message');
+        let audioElement = new Audio('notification.mp3');
+        button.addEventListener('click', function () {
+            message.style.position = 'absolute';
+            audioElement.play();
+            let hight = message.clientHeight;
+            message.style.transform = 'translateY(-1000px)';// `translateY(-${40 + messageHeight}px)`;Тут не догадался. Было не совсем понятно что должно сделать сообщение, куда анимировать. Я использовал свойство сначала initial потом absolute у position. Для чего получать высоту, тоже понял только тогда, когда посмотрел решение. Затык именно в последнем действии. Я думал оно должно прилетать под кнопку. 
+        });// в итоге я в принципе не правильно начал меняя свойство position. Думал это действие нужно, хотя оно не вынесено в пункты. 
+    </script>
+</body>
+
+</html>
