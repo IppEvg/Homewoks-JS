@@ -9,8 +9,8 @@
     <a href="https://example.com/producs/${здесь_id_товара}">Подробнее</a>
 </div>
 */
-let button = document.querySelectorAll('button');
-let div = document.querySelector('div');
+let buttons = document.querySelectorAll('button');
+let div = document.querySelector('.products');
 const products = {
     phones: [
         {
@@ -76,21 +76,20 @@ const products = {
     ],
 };
 
-button.forEach(function (e) {
-    e.addElementListener('click', clickHandler);
-}
+buttons.forEach(function (e) {
+    e.addEventListener('click', clickHandler);
+});
 /**
  * Эта функция должна вызываться при клике по кнопкам.
  * @param {MouseEvent} event
  */
 function clickHandler(event) {
-        //вам нужно очищать содержимое .products
-
-        showCategory(products.button.cassList());
-        getProductMarkup(product);
-        //в showCategory надо передать строку с типом категории, тип берите
-        //из атрибута data-type у кнопки, по которой кликнули.
-    }
+    //вам нужно очищать содержимое .products
+    div.innerHTML = "";
+    showCategory(event.target.dataset.type);
+    //в showCategory надо передать строку с типом категории, тип берите
+    //из атрибута data-type у кнопки, по которой кликнули.
+}
 
 /**
  * Функция берет товары (объекты) из соответствующего массива phones,
@@ -100,9 +99,15 @@ function clickHandler(event) {
  * по которой кликнули.
  */
 function showCategory(category) {
+    let categories = products[category];
+    let cell = '';
+    categories.forEach(function (product) {
+        cell = cell + getProductMarkup(product);
+    });
+    div.insertAdjacentHTML("afterbegin", cell);
 
 
-    }
+}
 
 /**
  * @param {Object} product объект из массива phones, tablets или tv.
@@ -114,13 +119,12 @@ function showCategory(category) {
  * в верху этого файла.
  */
 function getProductMarkup(product) {
-        let divMarkup = `
+    let divMarkup = `
         <div>${product.name}</div>
         <img src="${product.imageUrl}" alt="">
         <div>${product.price}</div>
-        <a href="https://example.com/producs/${здесь_id_товара}">Подробнее</a>
+        <a href="https://example.com/producs/${product.id}">Подробнее</a>
         `;
+    return divMarkup;
+}
 
-        div.insertAdjacentHTML('beforebegin', divMarkup);
-    };
-})
